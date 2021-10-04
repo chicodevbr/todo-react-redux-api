@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const todos = await Todo.find().sort({ date: -1 });
     res.send(todos);
