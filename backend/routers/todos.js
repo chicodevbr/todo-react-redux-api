@@ -1,4 +1,5 @@
 const { Todo } = require('../models/todo');
+const auth = require('../middleware/auth');
 const express = require('express');
 const Joi = require('joi');
 
