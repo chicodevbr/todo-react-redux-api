@@ -1,4 +1,6 @@
 const todos = require('./routers/todos');
+const signUp = require('./routers/signUp');
+const signIn = require('./routers/signIn');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -11,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/todos', todos);
+app.use('/api/signup', signUp);
+app.use('/api/signin', signIn);
 
 app.get('/', (req, res) => {
   res.send('Welcome to our todos api...');
