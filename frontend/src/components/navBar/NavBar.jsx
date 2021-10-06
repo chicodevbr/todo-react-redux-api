@@ -32,12 +32,10 @@ const NavBar = () => {
   const history = useHistory();
 
   const handleSignOut = () => {
-    //signout the user
     history.push('/signin');
   };
 
   const handleSignUp = () => {
-    //signout the user
     history.push('/signup');
   };
   return (
