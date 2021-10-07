@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { signIn } from '../../store/actions/authActions';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +40,23 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = () => {
   const classes = useStyles();
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [creds, setCreds] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signIn(creds));
+    setCreds({
+      email: '',
+      password: '',
+    });
+  };
+
+  if (auth._id) return <Redirect to="/" />;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -46,7 +68,7 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -57,6 +79,8 @@ const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            value={creds.email}
+            onChange={(e) => setCreds({ ...creds, email: e.target.value })}
           />
           <TextField
             variant="outlined"
@@ -68,6 +92,8 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={creds.password}
+            onChange={(e) => setCreds({ ...creds, password: e.target.value })}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

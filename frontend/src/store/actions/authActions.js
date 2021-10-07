@@ -23,6 +23,27 @@ export const signUp = (user) => {
   };
 };
 
+export const signIn = (creds) => {
+  return (dispatch) => {
+    axios
+      .post(`${url}/signin`, creds)
+      .then((token) => {
+        localStorage.setItem('token', token.data);
+        dispatch({
+          type: 'SIGN_IN',
+          token: token.data,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  };
+};
+
 export const loadUser = () => {
   return (dispatch, getState) => {
     const token = getState().auth.token;
@@ -34,5 +55,17 @@ export const loadUser = () => {
     } else {
       return null;
     }
+  };
+};
+
+export const signOut = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SIGN_OUT',
+    });
+
+    dispatch({
+      type: 'CLEAR_TODOS',
+    });
   };
 };

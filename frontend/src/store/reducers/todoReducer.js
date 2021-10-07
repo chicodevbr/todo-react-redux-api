@@ -28,6 +28,9 @@ const todoReducer = (state = [], action) => {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       return state.filter((todo) => todo._id !== action.id);
+
+    case 'CLEAR_TODOS':
+      return [];
     default:
       return state;
   }

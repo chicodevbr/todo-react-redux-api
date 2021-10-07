@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { Link, useHistory } from 'react-router-dom';
+import { signOut } from '../../store/actions/authActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,15 +31,17 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
   const classes = useStyles();
+  const loged = useSelector((state) => state);
+  console.log(loged);
+
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
+    dispatch(signOut());
     history.push('/signin');
   };
 
-  const handleSignUp = () => {
-    history.push('/signup');
-  };
   return (
     <div className={classes.root}>
       <AppBar position="static">

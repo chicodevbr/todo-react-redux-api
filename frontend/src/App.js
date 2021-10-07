@@ -1,4 +1,4 @@
-import React, { useEffect, useEffetc } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from '@material-ui/core';
