@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -11,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import { signUp } from '../../store/actions/authActions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,6 +37,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 const SignUp = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signUp(user));
+    setUser({
+      name: '',
+      email: '',
+      password: '',
+    });
+  };
+
+  if (auth._id) return <Redirect to="/" />;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,8 +68,19 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="enter-name"
+                label="Name"
+                value={user.name}
+                onChange={(e) => setUser({ ...user, name: e.target.value })}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -55,6 +90,8 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -67,6 +104,8 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
               />
             </Grid>
           </Grid>

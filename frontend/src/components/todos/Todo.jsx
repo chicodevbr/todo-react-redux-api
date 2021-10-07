@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Icon from '@material-ui/core/Icon';
 
-import { checkTodo } from '../../store/actions/todoActions';
+import { checkTodo, deleteTodo } from '../../store/actions/todoActions';
 
 const useStyles = makeStyles({
   root: {
@@ -51,6 +51,10 @@ const Todo = ({ todo, setTodo }) => {
 
   const handleCheck = (id) => {
     dispatch(checkTodo(id));
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteTodo(id));
   };
 
   return (
@@ -110,6 +114,7 @@ const Todo = ({ todo, setTodo }) => {
             color="secondary"
             className={classes.button}
             startIcon={<DeleteIcon />}
+            onClick={() => handleDelete(todo._id)}
           >
             Delete
           </Button>
