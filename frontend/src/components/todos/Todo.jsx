@@ -71,7 +71,7 @@ const Todo = ({ todo, setTodo }) => {
             color="textSecondary"
             gutterBottom
           >
-            Author: George
+            Author: {todo.author}
           </Typography>
 
           <Typography variant="body2" component="p" color="textSecondary">

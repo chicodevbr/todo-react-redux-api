@@ -38,7 +38,8 @@ const AddTodo = ({ todo, setTodo }) => {
         name: todo.name,
         isComplete: todo.isComplete,
         date: todo.date,
-        author: 'Kramer',
+        author: todo.author,
+        uid: todo.uid,
       };
       dispatch(updateTodo(update, id));
     } else {

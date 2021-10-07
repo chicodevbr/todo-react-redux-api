@@ -31,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
   const classes = useStyles();
-  const loged = useSelector((state) => state);
-  console.log(loged);
+  const state = useSelector((state) => state);
+  const auth = useSelector((state) => state.auth);
+  console.log(state);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -59,20 +60,27 @@ const NavBar = () => {
               ToDo App
             </Link>
           </Typography>
-          <Typography>Signed in as George</Typography>
-          <Button color="inherit" onClick={() => handleSignOut()}>
-            SignOut
-          </Button>
-          <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signin">
-              SignIn
-            </Link>
-          </Button>
-          <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signup">
-              SignUp
-            </Link>
-          </Button>
+          {auth._id ? (
+            <>
+              <Typography>Signed in as {auth.name}</Typography>
+              <Button color="inherit" onClick={() => handleSignOut()}>
+                SignOut
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit">
+                <Link className={classes.linkStyle} to="/signin">
+                  SignIn
+                </Link>
+              </Button>
+              <Button color="inherit">
+                <Link className={classes.linkStyle} to="/signup">
+                  SignUp
+                </Link>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
