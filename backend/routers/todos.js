@@ -1,14 +1,13 @@
 const { Todo } = require('../models/todo');
-const auth = require('../middleware/auth');
+// const auth = require('../middleware/auth');
 const express = require('express');
 const Joi = require('joi');
 
 const router = express.Router();
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const todos = await Todo.find().sort({ date: -1 });
-    console.log(req.user);
 
     res.send(todos);
   } catch (error) {
@@ -91,9 +90,13 @@ router.patch('/:id', async (req, res) => {
 
     if (!todo) return res.status(404).send('Todo not found...');
 
-    const updateTodo = await Todo.findByIdAndUpdate(req.params.id, {
-      isComplete: !todo.isComplete,
-    });
+    const updateTodo = await Todo.findByIdAndUpdate(
+      req.params.id,
+      {
+        isComplete: !todo.isComplete,
+      },
+      { new: true }
+    );
 
     res.send(updateTodo);
   } catch (error) {
