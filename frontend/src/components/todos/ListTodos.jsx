@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
 
 import Todo from './Todo';
+import { getTodos } from '../../store/actions/todoActions';
 
 const useStyles = makeStyles({
   todosStyle: {
@@ -16,8 +18,16 @@ const useStyles = makeStyles({
   },
 });
 
-const ListTodos = () => {
+const ListTodos = ({ setTodo }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos);
+  console.log(todos);
+
+  useEffect(() => {
+    dispatch(getTodos());
+  }, [dispatch]);
+
   return (
     <>
       <Typography
@@ -25,9 +35,12 @@ const ListTodos = () => {
         className={classes.todosStyle}
         color="textSecondary"
       >
-        Todos
+        {todos.length > 0 ? 'Todos' : 'noTodosYet'}
       </Typography>
-      <Todo />
+      {todos &&
+        todos.map((todo) => {
+          return <Todo todo={todo} key={todo._id} setTodo={setTodo} />;
+        })}
     </>
   );
 };
