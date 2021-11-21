@@ -11,7 +11,7 @@ const Todos = () => {
     isComplete: false,
   });
 
-  if (!auth._id) return <Redirect to="/signin" />;
+  if (!auth._id) return <Redirect to="/" />;
   return (
     <>
       <AddTodo todo={todo} setTodo={setTodo} />
